@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import { LoginSchema, SignupSchema } from "../zod";
 import { authMiddleware } from "../authMiddlware";
 
-
 const{userModel}=require("../model");
 
 
@@ -70,7 +69,7 @@ router.post("/auth/signup", async (req:Request, res:Response) => {
     }
 })
 
-router.post("POST /auth/login", async (req:Request, res:Response) => {
+router.post("/auth/login", async (req:Request, res:Response) => {
     try{
         const {success, data } = LoginSchema.safeParse(req.body);
         if(!success) {
@@ -129,7 +128,7 @@ router.post("POST /auth/login", async (req:Request, res:Response) => {
 router.get("/auth/me",authMiddleware,async (req:Request, res:Response) => {
     try{
         const userId = req.id;
-        const user = await userModel.findOne({id: userId})
+        const user = await userModel.findById({userId})
 
         return res.status(200).json({
             success:true,
