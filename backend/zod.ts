@@ -12,3 +12,11 @@ export const LoginSchema = z.object({
     email:z.email(),
     password:z.string(),
 })
+
+export const ConversationSchema = z.object({
+    content: z.string().min(1),
+});
+
+export const AssignConversationSchema = z.object({
+    agentId: z.string(),
+});
