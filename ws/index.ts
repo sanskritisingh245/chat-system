@@ -9,7 +9,7 @@ const wss = new WebSocketServer({port: 8080});
 
 const rooms = new Map<string, Set<WebSocket>>();
 const messageBuffers = new Map<string, any[]>();
-const onlineUsers = new Map<string, WebSocket>();
+
 
 
 wss.on("connection", (ws, req) => {
@@ -32,7 +32,7 @@ wss.on("connection", (ws, req) => {
     const joinedConversations = new Set<string>();
 
 
-    onlineUsers.set(userId, ws);
+   
 
     ws.on("message", async(raw ) => {
         try{
