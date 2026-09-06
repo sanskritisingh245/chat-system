@@ -45,4 +45,5 @@ router.get("/admin/analytics/supervisors", authMiddleware, async (req: Request, 
     }
 });
 
-module.exports = router;
+
+export default router;
