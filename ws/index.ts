@@ -61,7 +61,12 @@ wss.on("connection", (ws, req) => {
                 }
                 rooms.get(data.conversationId)!.add(ws)
                 joinedConversations.add(data.conversationId);
-    
+
+                const history = messageBuffers.get(data.conversationId) ?? [];
+                for (const message of history) {
+                    ws.send(JSON.stringify({ event: "NEW_MESSAGE", data: message }));
+                }
+
             }
             else if (event === "SEND_MESSAGE"){
                 if(!joinedConversations.has(data.conversationId)){
