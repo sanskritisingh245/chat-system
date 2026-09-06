@@ -144,3 +144,5 @@ router.get("/auth/me",authMiddleware,async (req:Request, res:Response) => {
         });
     }
 })
+
+export default router;
