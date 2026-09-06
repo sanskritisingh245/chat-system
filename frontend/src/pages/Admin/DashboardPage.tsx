@@ -12,7 +12,7 @@ export default function AdminDashboad(){
         });
         const data = await res.json();
         if(data.success){
-            setSupervisors(data.data.supervisor);
+            setSupervisors(data.data.supervisors);
         }
     }
 
@@ -24,7 +24,9 @@ export default function AdminDashboad(){
             {supervisors.map((supervisor: any) => (
                 <div key={supervisor.email}>
                     <span>{supervisor.name}</span>
+                    {" — Agents: "}
                     <span>{supervisor.agentCount}</span>
+                    {" — Conversations: "}
                     <span>{supervisor.conversationsHandled}</span>
                 </div>
             ))}
