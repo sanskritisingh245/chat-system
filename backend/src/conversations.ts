@@ -41,7 +41,11 @@ router.get("/conversations/:id" ,authMiddleware, async (req:Request, res:Respons
     try{
         const conversationId = req.params.id as string;
         const conversation = await conversationModel.findById(conversationId)
-        if(conversation.candidateId.toString() !== req.id){
+        const user = await userModel.findById(req.id);
+
+        const isMember = conversation.candidateId.toString() === req.id || conversation.agentId?.toString() === req.id || user.role === "supervisor";
+
+        if(!isMember){
             return res.status(400).json({
                 success:false,
                 error:"UNAUTHORIZED"
@@ -62,6 +66,41 @@ router.get("/conversations/:id" ,authMiddleware, async (req:Request, res:Respons
         });
     }
 })
+
+router.get("/conversations", authMiddleware, async (req: Request, res: Response) => {
+    try {
+        const user = await userModel.findById(req.id);
+
+        if (user.role != "supervisor"){
+            return res.status(400).json({
+                success:false,
+                error:"UNAUTHORIZED"
+            })
+        }
+
+        const myAgents = await userModel.find({ role: "agent", supervisorId: user.id });
+        const myAgentIds = myAgents.map((agent: any) => agent.id);
+
+        const conversations = await conversationModel.find({
+            $or: [
+                { agentId: null },
+                { agentId: { $in: myAgentIds } }
+            ]
+        });
+
+        return res.status(200).json({
+            success: true,
+            data: {
+                conversations
+            }
+        });
+    } catch (e: any) {
+        return res.status(500).json({
+            success: false,
+            msg: e.message || "Internal Server Error"
+        });
+    }
+});
 
 router.post("/conversations/:id/assign", authMiddleware, async (req: Request, res: Response) => {
     try {
@@ -131,3 +170,33 @@ router.post("/conversations/:id/close", authMiddleware, async (req:Request, res:
         });
     }
 });
+
+
+router.get("/agents", authMiddleware, async (req: Request, res: Response) => {
+    try {
+        const user = await userModel.findById(req.id);
+
+        if (user.role != "supervisor"){
+            return res.status(400).json({
+                success:false,
+                error:"UNAUTHORIZED"
+            })
+        }
+
+        const agents = await userModel.find({ role: "agent", supervisorId: user.id });
+
+        return res.status(200).json({
+            success: true,
+            data: {
+                agents
+            }
+        });
+    } catch (e: any) {
+        return res.status(500).json({
+            success: false,
+            msg: e.message || "Internal Server Error"
+        });
+    }
+});
+
+export default router;
