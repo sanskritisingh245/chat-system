@@ -5,7 +5,8 @@ export const SignupSchema = z.object({
     name:z.string(),
     email:z.email(),
     password:z.string(),
-    role:z.enum(["candidate", "agent", "supervisor", "admin"])
+    role:z.enum(["candidate", "agent", "supervisor", "admin"]),
+    supervisorId:z.string().optional()
 })
 
 export const LoginSchema = z.object({

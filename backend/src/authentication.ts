@@ -36,7 +36,8 @@ router.post("/auth/signup", async (req:Request, res:Response) => {
             name:data.name,
             email:data.email,
             password:hash,
-            role:data.role
+            role:data.role,
+            supervisorId:data.supervisorId || null
         })
         const role = user.role
 
@@ -116,6 +117,25 @@ router.post("/auth/login", async (req:Request, res:Response) => {
             }
         })
 
+
+    }catch (e: any) {
+        return res.status(500).json({
+            success: false,
+            msg: e.message || "Internal Server Error",
+        });
+    }
+})
+
+router.get("/supervisors", async (req:Request, res:Response) => {
+    try{
+        const supervisors = await userModel.find({role:"supervisor"});
+
+        return res.status(200).json({
+            success:true,
+            data:{
+                supervisors
+            }
+        })
 
     }catch (e: any) {
         return res.status(500).json({
