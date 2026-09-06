@@ -102,6 +102,33 @@ router.get("/conversations", authMiddleware, async (req: Request, res: Response)
     }
 });
 
+router.get("/agent/conversations", authMiddleware, async (req: Request, res: Response) => {
+    try {
+        const user = await userModel.findById(req.id);
+
+        if (user.role != "agent"){
+            return res.status(400).json({
+                success:false,
+                error:"UNAUTHORIZED"
+            })
+        }
+
+        const conversations = await conversationModel.find({ agentId: user.id });
+
+        return res.status(200).json({
+            success: true,
+            data: {
+                conversations
+            }
+        });
+    } catch (e: any) {
+        return res.status(500).json({
+            success: false,
+            msg: e.message || "Internal Server Error"
+        });
+    }
+});
+
 router.post("/conversations/:id/assign", authMiddleware, async (req: Request, res: Response) => {
     try {
         const { success, data } = AssignConversationSchema.safeParse(req.body);
@@ -198,5 +225,33 @@ router.get("/agents", authMiddleware, async (req: Request, res: Response) => {
         });
     }
 });
+
+router.get("/candidate/conversations", authMiddleware, async (req: Request, res: Response) => {
+    try {
+        const user = await userModel.findById(req.id);
+
+        if (user.role != "candidate"){
+            return res.status(400).json({
+                success:false,
+                error:"UNAUTHORIZED"
+            })
+        }
+
+        const conversations = await conversationModel.find({ candidateId: user.id });
+
+        return res.status(200).json({
+            success: true,
+            data: {
+                conversations
+            }
+        });
+    } catch (e: any) {
+        return res.status(500).json({
+            success: false,
+            msg: e.message || "Internal Server Error"
+        });
+    }
+});
+
 
 export default router;
