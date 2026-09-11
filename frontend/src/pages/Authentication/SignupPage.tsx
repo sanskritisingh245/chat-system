@@ -13,7 +13,7 @@ export default function Signup(){
 
     useEffect(() => {
         async function fetchSupervisors(){
-            const res = await fetch("http://localhost:3000/supervisors");
+            const res = await fetch("https://api.chat-system.sanskriti.xyz/supervisors");
             const data = await res.json();
             if(data.success){
                 setSupervisors(data.data.supervisors);
@@ -23,7 +23,7 @@ export default function Signup(){
     }, []);
 
     async function handleSubmit(){
-        const res= await fetch("http://localhost:3000/auth/signup",{
+        const res= await fetch("https://api.chat-system.sanskriti.xyz/auth/signup",{
             method:"POST",
             headers:{
                 "content-Type":"application/json",

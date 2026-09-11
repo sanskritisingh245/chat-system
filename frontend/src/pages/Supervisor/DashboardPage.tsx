@@ -5,7 +5,7 @@ export default function DashboardPage(){
     const [agents, setAgents] = useState([]);
 
     async function fetchData() {
-        const res = await fetch("http://localhost:3000/conversations", { 
+        const res = await fetch("https://api.chat-system.sanskriti.xyz/conversations", { 
             headers: { 
                 authorization: localStorage.getItem("token") ?? ""
 
@@ -16,7 +16,7 @@ export default function DashboardPage(){
             setConversations(data.data.conversations);
         }
 
-        const agentRes = await fetch("http://localhost:3000/agents", {
+        const agentRes = await fetch("https://api.chat-system.sanskriti.xyz/agents", {
             headers: { 
                 authorization: localStorage.getItem("token") ?? ""
             }
@@ -33,7 +33,7 @@ export default function DashboardPage(){
     }, [])
 
     async function handleAssign(conversationId: string, agentId: string) {
-        await fetch(`http://localhost:3000/conversations/${conversationId}/assign`, {
+        await fetch(`https://api.chat-system.sanskriti.xyz/conversations/${conversationId}/assign`, {
             method: "POST",
             headers: { 
                 "content-type": "application/json", 

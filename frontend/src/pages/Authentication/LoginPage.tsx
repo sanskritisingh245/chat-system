@@ -8,7 +8,7 @@ export default function Login({onLogin}){
     const navigate = useNavigate();
 
     async function handleSubmit(){
-        const res= await fetch("http://localhost:3000/auth/login",{
+        const res= await fetch("https://api.chat-system.sanskriti.xyz/auth/login",{
             method:"POST",
             headers:{
                 "content-Type":"application/json",

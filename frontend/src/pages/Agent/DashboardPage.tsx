@@ -6,7 +6,7 @@ export default function DashboardPage() {
     const navigate = useNavigate();
 
     async function fetchData(){
-        const res = await fetch("http://localhost:3000/agent/conversations", {
+        const res = await fetch("https://api.chat-system.sanskriti.xyz/agent/conversations", {
             method:"GET",
             headers:{
                 authorization :localStorage.getItem("token") ?? "" 

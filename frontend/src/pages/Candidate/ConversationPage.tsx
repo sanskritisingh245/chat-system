@@ -9,7 +9,7 @@ export default function ConversationPage(){
     const ws = useRef<WebSocket | null>(null);
 
     async function fetchData() {
-        const res = await fetch(`http://localhost:3000/conversations/${id}`, {
+        const res = await fetch(`https://api.chat-system.sanskriti.xyz/conversations/${id}`, {
             method:"GET",
             headers: { 
                 authorization: localStorage.getItem("token") ?? "" 
@@ -27,7 +27,7 @@ export default function ConversationPage(){
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        const socket = new WebSocket(`ws://localhost:8080?token=${token}`);
+        const socket = new WebSocket(`wss://api.chat-system.sanskriti.xyz/ws?token=${token}`);
         ws.current = socket;
 
         socket.onopen= () => {

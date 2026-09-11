@@ -4,7 +4,7 @@ export default function AdminDashboad(){
     const [supervisors , setSupervisors] = useState([]);
 
     async function fetchData(){
-        const res= await fetch ("http://localhost:3000/admin/analytics/supervisors", {
+        const res= await fetch ("https://api.chat-system.sanskriti.xyz/admin/analytics/supervisors", {
             method:"GET",
             headers:{
                 authorization: localStorage.getItem("token") ?? ""

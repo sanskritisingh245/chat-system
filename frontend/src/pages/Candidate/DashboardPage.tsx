@@ -7,7 +7,7 @@ export default function DashboardPage() {
     const navigate = useNavigate();
 
     async function fetchData() {
-        const res = await fetch("http://localhost:3000/candidate/conversations", {
+        const res = await fetch("https://api.chat-system.sanskriti.xyz/candidate/conversations", {
             method:"GET",
             headers: { 
                 authorization: localStorage.getItem("token") ?? "" 
@@ -26,7 +26,7 @@ export default function DashboardPage() {
 
 
     async function handleCreate() {
-        await fetch("http://localhost:3000/conversations", {
+        await fetch("https://api.chat-system.sanskriti.xyz/conversations", {
             method: "POST",
             headers: {
                 "content-type": "application/json",

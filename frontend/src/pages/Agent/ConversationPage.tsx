@@ -9,7 +9,7 @@ export default function ConversationPage() {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        const socket = new WebSocket(`ws://localhost:8080?token=${token}`);
+        const socket = new WebSocket(`wss://api.chat-system.sanskriti.xyz/ws?token=${token}`);
         ws.current = socket;
 
         socket.onopen = () => {
