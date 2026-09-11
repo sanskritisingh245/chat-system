@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/Authentication/LoginPage";
 import SignupPage from "./pages/Authentication/SignupPage";
 import AdminDashboardPage from "./pages/Admin/DashboardPage";
-import SupervisorDashboardPage from "./pages/Supervisor/DashBoardPage";
+import SupervisorDashboardPage from "./pages/Supervisor/DashboardPage";
 import SupervisorConversationPage from "./pages/Supervisor/ConversationPage";
 import AgentDashboardPage from "./pages/Agent/DashboardPage";
 import AgentConversationPage from "./pages/Agent/ConversationPage";
