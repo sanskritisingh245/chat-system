@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 20000 });
 
 const userSchema = new mongoose.Schema({
     name: {type: String, required:true},
